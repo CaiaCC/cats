@@ -1,54 +1,23 @@
-// const fs = require('fs');
+const fs = require("fs");
 
-// const breedDetailsFromFile = function(filePath, callback) {
-//   console.log('breedDetailsFromFile: Calling readFile...');
-//   fs.readFile(filePath, 'utf8', (error, data) => {
-//     console.log("In readFile's Callback: it has the data.");
-	
-// 		if (error) {
-// 			// console.log(error);
-// 			// cb(err);
-// 		};
-// 		// cb(null, data);
-//   });
-// };
-
-// const bombay = breedDetailsFromFile('./data/${breed}.txt', (data)=>{
-// 	// if(err) throw err;
-// 	// console.log(data)
-// 	return data;
-// });
-// console.log('Return Value: ', bombay);
-
-
-// asyncBreeds.js
-const fs = require('fs');
-
-const readFileCallback = (error, data) => {
+const breedDetailsFromFile = function (breed, functionToRunWhenThingsAreDone) {
+  console.log("breedDetailsFromFile: Calling readFile...");
+  fs.readFile(`./data/${breed}.txt`, "utf8", (error, data) => {
+    // CHANGE: Pass data into callback instead of returning it directly
     console.log("In readFile's Callback: it has the data.");
-    // ISSUE: Returning from *inner* callback function, not breedDetailsFromFile.
-    if (!error) {
-		console.log("Return value: " + data);
-	} else {
-		console.log(error);
-	}
-}
-
-const breedDetailsFromFile = function(breed, callback) {
-  console.log('breedDetailsFromFile: Calling readFile...');
-  fs.readFile(`./data/${breed}.txt`, 'utf8', readFileCallback); // takes 5 seconds to run
-
- // takes .0000000001 second
-  // ISSUE: Attempting to return data out here will also not work.
-  //        Currently not returning anything from here, so breedDetailsFromFile function returns undefined.
+    !error
+      ? functionToRunWhenThingsAreDone(data)
+      : functionToRunWhenThingsAreDone(undefined);
+  });
 };
 
-// we try to get the return value
+// CHANGE 1: Moved the console.log into a new function:
+const printOutCatBreed = (breed) => {
+  console.log("Return Value: ", breed); // => print out details correctly.
+};
 
-const callback = function(data) {
-	console.log('Return Value: ', data);
-}
+// CHANGE 2: we're now passing two arguments into breedDetailsFromFile: breed string and a callback function
+breedDetailsFromFile("Bombay", printOutCatBreed);
 
-breedDetailsFromFile('Bombay', callback);
- // => will NOT print out details, instead we will see undefined!
 
+module.exports = breedDetailsFromFile;

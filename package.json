@@ -1,0 +1,21 @@
+{
+  "name": "cats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "asyncBreeds.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": "git+https://github.com/CaiaCC/cats.git",
+  "keywords": [],
+  "author": "Caia Chuang <caiachuang@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaiaCC/cats/issues"
+  },
+  "homepage": "https://github.com/CaiaCC/cats#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
